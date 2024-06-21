@@ -8,6 +8,7 @@ from PIL import Image
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--frames_dir", type=str, default="res/frames/", help="Directory containing frames.")
+parser.add_argument("--output_dir", type=str, default="res/features/", help="Directory to save extracted features.")
 
 
 weights = MobileNet_V2_Weights.IMAGENET1K_V1
@@ -26,24 +27,26 @@ def extract_features_from_img(img_path):
         
     return features.numpy()
 
-def save_features(frames_dir):
+def save_features(frames_dir, output_dir):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        
     for folder_name in os.listdir(frames_dir):
         folder_path = os.path.join(frames_dir, folder_name)
-        if os.path.isdir(folder_path):
-            object_features = []
-            for frame_name in sorted(os.listdir(folder_path)):
-                if frame_name.endswith(".jpg"):
-                    frame_path = os.path.join(folder_path, frame_name)
-                    features = extract_features_from_img(frame_path)
-                    object_features.append(features)
+        object_features = []
+        for frame_name in sorted(os.listdir(folder_path)):
+            frame_path = os.path.join(folder_path, frame_name)
+            features = extract_features_from_img(frame_path)
+            object_features.append(features)
             
-            object_features = np.vstack(object_features)  
-            feature_file_path = os.path.join(folder_path, "features.npy")
-            np.save(feature_file_path, object_features)
+        object_features = np.vstack(object_features)
+        feature_file_path = os.path.join(output_dir, f"{folder_name}.npy")
+        np.save(feature_file_path, object_features)
+        print(f"Saved features for {folder_name} to {feature_file_path}")
 
 
 def main(args):
-    save_features(args.frames_dir)
+    save_features(args.frames_dir, args.output_dir)
 
 
 if __name__ == "__main__":
