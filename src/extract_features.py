@@ -11,13 +11,17 @@ parser.add_argument("--frames_dir", type=str, default="res/frames/", help="Direc
 parser.add_argument("--output_dir", type=str, default="res/features/", help="Directory to save extracted features.")
 
 
-weights = MobileNet_V2_Weights.IMAGENET1K_V1
-model = models.mobilenet_v2(weights=weights)
-model.eval()
-
-preprocessing_pipeline = weights.transforms()
+def initialize_model():
+    global model, preprocessing_pipeline
+    weights = MobileNet_V2_Weights.IMAGENET1K_V1
+    model = models.mobilenet_v2(weights=weights)
+    model.eval()
+    preprocessing_pipeline = weights.transforms()
 
 def extract_features_from_img(img_path):
+    if 'model' not in globals() or 'preprocessing_pipeline' not in globals():
+        raise ValueError("Model is not initialized. Call initialize_model() first.")
+    
     img = Image.open(img_path).convert("RGB")
     img_tensor = preprocessing_pipeline(img)
     img_tensor = img_tensor.unsqueeze(0)
@@ -46,6 +50,7 @@ def save_features(frames_dir, output_dir):
 
 
 def main(args):
+    initialize_model()
     save_features(args.frames_dir, args.output_dir)
 
 
