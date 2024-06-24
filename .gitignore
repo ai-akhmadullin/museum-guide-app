@@ -34,6 +34,8 @@ bin/
 res/
 *.ipynb
 gradle/
+.gradle/
+build/
 build.gradle.kts
 gradle.properties
 gradlew*
