@@ -30,13 +30,21 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+### Android Studio ###
+MuseumGuideApp/*.iml
+MuseumGuideApp/.gradle
+MuseumGuideApp/local.properties
+MuseumGuideApp/.idea/caches
+MuseumGuideApp/.idea/libraries
+MuseumGuideApp/.idea/modules.xml
+MuseumGuideApp/.idea/workspace.xml
+MuseumGuideApp/.idea/navEditor.xml
+MuseumGuideApp/.idea/assetWizardSettings.xml
+MuseumGuideApp/build
+MuseumGuideApp/captures
+MuseumGuideApp/.externalNativeBuild
+MuseumGuideApp/.cxx
+
 ### Other ###
 res/
-*.ipynb
-gradle/
-.gradle/
-build/
-build.gradle.kts
-gradle.properties
-gradlew*
-settings.gradle.kts
+
