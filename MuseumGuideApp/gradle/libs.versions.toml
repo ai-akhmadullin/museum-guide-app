@@ -1,5 +1,7 @@
 [versions]
 agp = "8.5.0"
+cameraViewVersion = "1.3.0-rc01"
+cameraxVersion = "1.3.0-rc01"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -9,11 +11,30 @@ lifecycleRuntimeKtx = "2.8.2"
 activityCompose = "1.9.0"
 composeBom = "2024.04.01"
 navigationCompose = "2.7.7"
+xcameraCamera2 = " **3.0-rc01"
+xcameraCore = " **3.0-rc01"
+xcameraExtensions = " **3.0-rc01"
+xcameraLifecycle = " **3.0-rc01"
+xcameraVideo = " **3.0-rc01"
+xcameraView = " **3.0-rc01"
+cameraView = "1.3.4"
 
 [libraries]
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraxVersion" }
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraxVersion" }
+androidx-camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraViewVersion" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraxVersion" }
+androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "cameraxVersion" }
+androidx-camera-view-v130rc01 = { module = "androidx.camera:camera-view", version.ref = "cameraViewVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-xcamera-camera2 = { module = "androidx. camera: camera-camera2", version.ref = "xcameraCamera2" }
+androidx-xcamera-core = { module = "androidx. camera: camera-core", version.ref = "xcameraCore" }
+androidx-xcamera-extensions = { module = "androidx. camera: camera-extensions", version.ref = "xcameraExtensions" }
+androidx-xcamera-lifecycle = { module = "androidx. camera: camera-lifecycle", version.ref = "xcameraLifecycle" }
+androidx-xcamera-video = { module = "androidx. camera: camera-video", version.ref = "xcameraVideo" }
+androidx-xcamera-view = { module = "androidx. camera: camera-view", version.ref = "xcameraView" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -27,6 +48,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
