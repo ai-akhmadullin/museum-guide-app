@@ -26,7 +26,7 @@ def extract_frames(video_path, output_folder, fps=1):
 
 def main(videos_dir, frames_dir, fps):
     for file_name in os.listdir(videos_dir):
-        if file_name.endswith(".mov"):
+        if file_name.endswith(".mov") or file_name.endswith(".MOV"):
             video_id = os.path.splitext(file_name)[0]
             video_path = os.path.join(videos_dir, file_name)
             
