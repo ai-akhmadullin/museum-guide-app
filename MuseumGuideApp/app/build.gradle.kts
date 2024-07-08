@@ -77,5 +77,8 @@ dependencies {
     implementation(libs.androidx.camera.video)
     implementation(libs.androidx.camera.view.v130rc01)
     implementation(libs.androidx.camera.extensions)
-    
+
+    implementation(libs.tensorflow.lite.task.vision)
+    implementation(libs.tensorflow.lite.gpu.delegate.plugin)
+    implementation(libs.tensorflow.lite.gpu)
 }

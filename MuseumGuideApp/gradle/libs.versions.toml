@@ -11,6 +11,9 @@ lifecycleRuntimeKtx = "2.8.2"
 activityCompose = "1.9.0"
 composeBom = "2024.04.01"
 navigationCompose = "2.7.7"
+tensorflowLiteGpu = "2.9.0"
+tensorflowLiteGpuDelegatePlugin = "0.4.0"
+tensorflowLiteTaskVision = "0.4.0"
 xcameraCamera2 = " **3.0-rc01"
 xcameraCore = " **3.0-rc01"
 xcameraExtensions = " **3.0-rc01"
@@ -49,6 +52,9 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
+tensorflow-lite-gpu = { module = "org.tensorflow:tensorflow-lite-gpu", version.ref = "tensorflowLiteGpu" }
+tensorflow-lite-gpu-delegate-plugin = { module = "org.tensorflow:tensorflow-lite-gpu-delegate-plugin", version.ref = "tensorflowLiteGpuDelegatePlugin" }
+tensorflow-lite-task-vision = { module = "org.tensorflow:tensorflow-lite-task-vision", version.ref = "tensorflowLiteTaskVision" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
