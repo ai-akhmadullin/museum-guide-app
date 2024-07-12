@@ -34,7 +34,7 @@ class TfLiteIClassifier(
         try {
             classifier = ImageClassifier.createFromFileAndOptions(
                 context,
-                "model.tflite",
+                "mobilenet_v2_custom.tflite",
                 options
             )
         } catch (e: IllegalStateException) {

@@ -1,4 +1,5 @@
 import argparse
+import subprocess
 import numpy as np
 import tensorflow as tf
 from keras.applications import MobileNetV2
@@ -6,10 +7,15 @@ from keras.preprocessing.image import ImageDataGenerator
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--frames_dir", type=str, default="res/frames", help="Directory containing frames.")
-parser.add_argument("--output_model_path", type=str, default="python/model.tflite", help="Path to save the TFLite model.")
+parser.add_argument("--output_model_path", type=str, default="python/mobilenet_v2_custom.tflite", help="Path to save the TFLite model.")
 parser.add_argument("--epochs", type=int, default=10, help="Number of epochs for initial training.")
 parser.add_argument("--finetune_epochs", type=int, default=10, help="Number of epochs for fine-tuning.")
-parser.add_argument("--validation_split", type=float, default=0.2, help="Fraction of data to use for validation (0 to disable validation).")
+parser.add_argument("--validation_split", type=float, default=0.0, help="Fraction of data to use for validation (0 to disable validation).")
+
+parser.add_argument("--generate_metadata", type=bool, default=False, help="Flag to generate metadata for the TFLite model.")
+parser.add_argument("--metadata_script", type=str, default="python/metadata_writer_for_image_classifier.py", help="Path to the metadata script.")
+parser.add_argument("--label_file", type=str, default="MuseumGuideApp/app/src/main/assets/labels.txt", help="Path to the label file.")
+parser.add_argument("--export_directory", type=str, default="MuseumGuideApp/app/src/main/assets", help="Directory to save the model with metadata.")
 
 
 def main(args):
@@ -88,6 +94,12 @@ def main(args):
 
     with open(args.output_model_path, "wb") as f:
         f.write(tflite_model)
+
+    if args.generate_metadata:
+        subprocess.run(["/usr/bin/python3", args.metadata_script,
+                        "--model_file", args.output_model_path,
+                        "--label_file", args.label_file,
+                        "--export_directory", args.export_directory])
 
 
 if __name__ == "__main__":
