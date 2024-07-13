@@ -26,13 +26,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.museumguide.ui.theme.MuseumGuideTheme
 
 class MainActivity : ComponentActivity() {
@@ -48,8 +52,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MuseumGuideTheme {
+                val context = LocalContext.current
+                val exhibits = remember { parseExhibits(context) }
+                val navController = rememberNavController()
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    MuseumGuideAppPreview()
+                    MuseumGuideApp(navController, exhibits)
                 }
             }
         }
@@ -61,8 +68,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MuseumGuideApp() {
-    val navigationController = rememberNavController()
+fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhibit>) {
     val selectedIcon = remember {
         mutableStateOf(Icons.Default.Home)
     }
@@ -125,8 +131,15 @@ fun MuseumGuideApp() {
         NavHost(navController = navigationController, startDestination = Screens.Home.screen,
             modifier = Modifier.padding(paddingValues)) {
             composable(Screens.Home.screen) { Home() }
-            composable(Screens.PhotoScanner.screen) { PhotoScanner() }
+            composable(Screens.PhotoScanner.screen) { PhotoScanner(navigationController) }
             composable(Screens.Gallery.screen) { Gallery() }
+            composable(
+                route = "exhibit_detail/{exhibitId}",
+                arguments = listOf(navArgument("exhibitId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val exhibitId = backStackEntry.arguments?.getInt("exhibitId") ?: 0
+                ExhibitDetailScreen(exhibitId, exhibits, navigationController)
+            }
         }
     }
 }
@@ -136,6 +149,9 @@ fun MuseumGuideApp() {
 @Composable
 fun MuseumGuideAppPreview() {
     MuseumGuideTheme {
-        MuseumGuideApp()
+        val context = LocalContext.current
+        val exhibits = remember { parseExhibits(context) }
+        val navController = rememberNavController()
+        MuseumGuideApp(navController, exhibits)
     }
 }

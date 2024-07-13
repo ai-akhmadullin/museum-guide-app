@@ -15,7 +15,7 @@ import org.tensorflow.lite.task.vision.classifier.ImageClassifier
 
 class TfLiteIClassifier(
     private val context: Context,
-    private val threshold: Float = 0.5f,
+    private val threshold: Float = 0.01f,
     private val maxResults: Int = 1
 ): IClassifier {
 
@@ -62,7 +62,7 @@ class TfLiteIClassifier(
         return results?.flatMap { classifications ->
             classifications.categories.map { category ->
                 Classification(
-                    name = category.displayName,
+                    name = category.label,
                     score = category.score
                )
             }

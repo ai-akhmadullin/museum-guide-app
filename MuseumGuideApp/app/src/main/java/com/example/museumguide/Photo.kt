@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,12 +23,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavHostController
 import com.example.museumguide.data.TfLiteIClassifier
 import com.example.museumguide.domain.Classification
 import com.example.museumguide.domain.ImageAnalyzer
 
 @Composable
-fun PhotoScanner() {
+fun PhotoScanner(navigationController: NavHostController) {
     val context = LocalContext.current
 
     var classifications by remember {
@@ -65,18 +67,27 @@ fun PhotoScanner() {
                 .padding(top = 32.dp)
 
         ) {
-            classifications.forEach {
-                Text(
-                    text = it.name,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .padding(8.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.primary
-                )
+                if (classifications.isNotEmpty()) {
+                    val clf = classifications[0]
+                    Text(
+                        text = clf.name,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .padding(8.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+
+                    Button(onClick = {
+                        val exhibitId = clf.name.toInt()
+                        navigationController.navigate("exhibit_detail/$exhibitId")
+                    }) {
+                        Text("See Details")
+                    }
+                }
             }
         }
-    }
+
 }
