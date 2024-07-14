@@ -132,7 +132,7 @@ fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhib
             modifier = Modifier.padding(paddingValues)) {
             composable(Screens.Home.screen) { Home() }
             composable(Screens.PhotoScanner.screen) { PhotoScanner(navigationController) }
-            composable(Screens.Gallery.screen) { Gallery() }
+            composable(Screens.Gallery.screen) { Gallery(navigationController, exhibits) }
             composable(
                 route = "exhibit_detail/{exhibitId}",
                 arguments = listOf(navArgument("exhibitId") { type = NavType.IntType })
