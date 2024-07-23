@@ -58,7 +58,7 @@ fun PhotoScanner(navigationController: NavHostController) {
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        CameraPreview(controller = controller, Modifier.fillMaxSize())
+        CameraPreviewWithOverlay(controller = controller, Modifier.fillMaxSize())
 
         Column(
             modifier = Modifier
