@@ -83,4 +83,6 @@ dependencies {
     implementation(libs.tensorflow.lite.gpu)
 
     implementation(libs.commons.csv)
+
+    implementation(libs.androidx.core.splashscreen)
 }
