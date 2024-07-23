@@ -134,16 +134,28 @@ fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhib
             composable(Screens.PhotoScanner.screen) { PhotoScanner(navigationController) }
             composable(Screens.Gallery.screen) { Gallery(navigationController, exhibits) }
             composable(
-                route = "exhibit_detail/{exhibitId}",
-                arguments = listOf(navArgument("exhibitId") { type = NavType.IntType })
+                route = "exhibit_detail/{exhibitId}?otherClassifications={otherClassifications}",
+                arguments = listOf(
+                    navArgument("exhibitId") { type = NavType.IntType },
+                    navArgument("otherClassifications") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                        nullable = true
+                    }
+                )
             ) { backStackEntry ->
                 val exhibitId = backStackEntry.arguments?.getInt("exhibitId") ?: 0
-                ExhibitDetailScreen(exhibitId, exhibits, navigationController)
+                val otherClassifications = backStackEntry.arguments?.getString("otherClassifications").orEmpty()
+                ExhibitDetailScreen(
+                    exhibitId = exhibitId,
+                    otherClassifications = otherClassifications,
+                    exhibits = exhibits,
+                    navController = navigationController
+                )
             }
         }
     }
 }
-
 
 @Preview
 @Composable

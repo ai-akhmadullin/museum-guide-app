@@ -16,7 +16,7 @@ import org.tensorflow.lite.task.vision.classifier.ImageClassifier
 class TfLiteIClassifier(
     private val context: Context,
     private val threshold: Float = 0.01f,
-    private val maxResults: Int = 1
+    private val maxResults: Int = 5
 ): IClassifier {
 
     private var classifier: ImageClassifier? = null

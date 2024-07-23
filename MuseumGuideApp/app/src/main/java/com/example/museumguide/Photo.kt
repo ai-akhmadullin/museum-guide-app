@@ -65,29 +65,30 @@ fun PhotoScanner(navigationController: NavHostController) {
                 .fillMaxSize()
                 .align(Alignment.TopCenter)
                 .padding(top = 32.dp)
-
         ) {
-                if (classifications.isNotEmpty()) {
-                    val clf = classifications[0]
-                    Text(
-                        text = clf.name,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primaryContainer)
-                            .padding(8.dp),
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+            if (classifications.isNotEmpty()) {
+                val topClassification = classifications[0]
+                val otherClassifications = classifications.drop(1).take(4).joinToString(",") { it.name }
 
-                    Button(onClick = {
-                        val exhibitId = clf.name.toInt()
-                        navigationController.navigate("exhibit_detail/$exhibitId")
-                    }) {
-                        Text("See Details")
-                    }
+                Text(
+                    text = topClassification.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .padding(8.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Button(onClick = {
+                    val exhibitId = topClassification.name.toInt()
+                    navigationController.navigate("exhibit_detail/$exhibitId?otherClassifications=$otherClassifications")
+                }) {
+                    Text("See Details")
                 }
+
             }
         }
-
+    }
 }
