@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Camera
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.BottomAppBar
@@ -78,7 +80,8 @@ fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhib
     Scaffold(
         bottomBar = {
             BottomAppBar(
-                containerColor = Color.Cyan
+                containerColor = Color.White,
+                contentColor = Color.DarkGray
             ) {
                 IconButton(
                     onClick = {
@@ -93,7 +96,7 @@ fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhib
                         Icons.Default.Home,
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
-                        tint = if (selectedIcon.value == Icons.Default.Home) Color.White else Color.DarkGray
+                        tint = if (selectedIcon.value == Icons.Default.Home) Color.Black else Color.DarkGray
                     )
                 }
 
@@ -107,7 +110,7 @@ fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhib
                             popUpTo(0)
                         }
                     }) {
-                        Icon(Icons.Default.Add, contentDescription = null, tint = Color.Green)
+                        Icon(Icons.Default.CameraAlt, contentDescription = null, tint = Color.Black)
                     }
                 }
 
@@ -124,7 +127,7 @@ fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhib
                         Icons.Default.PhotoLibrary,
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
-                        tint = if (selectedIcon.value == Icons.Default.PhotoLibrary) Color.White else Color.DarkGray
+                        tint = if (selectedIcon.value == Icons.Default.PhotoLibrary) Color.Black else Color.DarkGray
                     )
                 }
             }
