@@ -63,10 +63,11 @@ class TfLiteIClassifier(
             classifications.categories.map { category ->
                 Classification(
                     name = category.label,
+                    id = category.index + 1,
                     score = category.score
                )
             }
-        }?.distinctBy { it.name } ?: emptyList()
+        }?.distinctBy { it.id } ?: emptyList()
     }
 
     private fun getOrientationFromRotation(rotation: Int): ImageProcessingOptions.Orientation {

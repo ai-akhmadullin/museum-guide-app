@@ -68,7 +68,7 @@ fun PhotoScanner(navigationController: NavHostController) {
         ) {
             if (classifications.isNotEmpty()) {
                 val topClassification = classifications[0]
-                val otherClassifications = classifications.drop(1).take(4).joinToString(",") { it.name }
+                val otherClassifications = classifications.drop(1).take(4).joinToString(",") { it.id.toString() }
 
                 Text(
                     text = topClassification.name,
@@ -82,7 +82,7 @@ fun PhotoScanner(navigationController: NavHostController) {
                 )
 
                 Button(onClick = {
-                    val exhibitId = topClassification.name.toInt()
+                    val exhibitId = topClassification.id
                     navigationController.navigate("exhibit_detail/$exhibitId?otherClassifications=$otherClassifications")
                 }) {
                     Text("See Details")
