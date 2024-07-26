@@ -85,7 +85,9 @@ fun PhotoScanner(navigationController: NavHostController) {
                 ) {
                     Text(
                         text = topClassification.name,
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .align(Alignment.CenterHorizontally),
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
