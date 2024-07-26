@@ -11,11 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Camera
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PhotoLibrary
+import androidx.compose.material.icons.outlined.CameraAlt
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.PhotoLibrary
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -73,9 +74,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhibit>) {
-    val selectedIcon = remember {
-        mutableStateOf(Icons.Default.Home)
-    }
+    val selectedIcon = remember { mutableStateOf(Icons.Default.Home) }
 
     Scaffold(
         bottomBar = {
@@ -92,25 +91,33 @@ fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhib
                     },
                     modifier = Modifier.weight(1f)
                 ) {
+                    val homeIcon = if (selectedIcon.value == Icons.Default.Home) Icons.Filled.Home else Icons.Outlined.Home
                     Icon(
-                        Icons.Default.Home,
+                        imageVector = homeIcon,
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
-                        tint = if (selectedIcon.value == Icons.Default.Home) Color.Black else Color.DarkGray
+                        tint = Color.Black
                     )
                 }
 
-                Box(modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp),
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(16.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     FloatingActionButton(onClick = {
+                        selectedIcon.value = Icons.Default.CameraAlt
                         navigationController.navigate(Screens.PhotoScanner.screen) {
                             popUpTo(0)
                         }
                     }) {
-                        Icon(Icons.Default.CameraAlt, contentDescription = null, tint = Color.Black)
+                        val cameraIcon = if (selectedIcon.value == Icons.Default.CameraAlt) Icons.Filled.CameraAlt else Icons.Outlined.CameraAlt
+                        Icon(
+                            imageVector = cameraIcon,
+                            contentDescription = null,
+                            tint = Color.Black
+                        )
                     }
                 }
 
@@ -123,18 +130,22 @@ fun MuseumGuideApp(navigationController: NavHostController, exhibits: List<Exhib
                     },
                     modifier = Modifier.weight(1f)
                 ) {
+                    val photoLibraryIcon = if (selectedIcon.value == Icons.Default.PhotoLibrary) Icons.Filled.PhotoLibrary else Icons.Outlined.PhotoLibrary
                     Icon(
-                        Icons.Default.PhotoLibrary,
+                        imageVector = photoLibraryIcon,
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
-                        tint = if (selectedIcon.value == Icons.Default.PhotoLibrary) Color.Black else Color.DarkGray
+                        tint = Color.Black
                     )
                 }
             }
         }
     ) { paddingValues ->
-        NavHost(navController = navigationController, startDestination = Screens.Home.screen,
-            modifier = Modifier.padding(paddingValues)) {
+        NavHost(
+            navController = navigationController,
+            startDestination = Screens.Home.screen,
+            modifier = Modifier.padding(paddingValues)
+        ) {
             composable(Screens.Home.screen) { Home() }
             composable(Screens.PhotoScanner.screen) { PhotoScanner(navigationController) }
             composable(Screens.Gallery.screen) { Gallery(navigationController, exhibits) }
