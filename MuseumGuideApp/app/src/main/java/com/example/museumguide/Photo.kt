@@ -127,7 +127,7 @@ fun CameraScreen(navigationController: NavHostController) {
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        CameraPreviewWithOverlay(controller = controller, Modifier.fillMaxSize())
+        CameraPreview(controller = controller, Modifier.fillMaxSize())
 
         Column(
             modifier = Modifier
