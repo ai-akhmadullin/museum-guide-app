@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--frames_dir", type=str, default="res/frames", help="Directory containing frames.")
 parser.add_argument("--output_tf_path", type=str, default="python/mobilenet_v2_custom.h5", help="Path to save the TF model.")
 parser.add_argument("--output_tflite_path", type=str, default="python/mobilenet_v2_custom.tflite", help="Path to save the TFLite model.")
-parser.add_argument("--epochs", type=int, default=10, help="Number of epochs for initial training.")
+parser.add_argument("--epochs", type=int, default=20, help="Number of epochs for initial training.")
 parser.add_argument("--finetune_epochs", type=int, default=10, help="Number of epochs for fine-tuning.")
 parser.add_argument("--validation_split", type=float, default=0.0, help="Fraction of data to use for validation (0 to disable validation).")
 
@@ -28,7 +28,7 @@ def main(args):
 
     datagen = ImageDataGenerator(
         rescale=1./255,
-        rotation_range=40,
+        rotation_range=20,
         width_shift_range=0.2,
         height_shift_range=0.2,
         shear_range=0.2,
@@ -83,6 +83,9 @@ def main(args):
     )
 
     base_model.trainable = True
+    fine_tune_after = 120
+    for layer in base_model.layers[:fine_tune_after]:
+        layer.trainable = False
 
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-5),
                   loss="categorical_crossentropy",
