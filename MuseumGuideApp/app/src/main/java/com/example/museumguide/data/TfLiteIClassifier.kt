@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.view.Surface
 import com.example.museumguide.domain.Classification
 import com.example.museumguide.domain.IClassifier
-import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
@@ -49,7 +48,6 @@ class TfLiteIClassifier(
 
         val imageProcessor = ImageProcessor.Builder()
             .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
-            .add(NormalizeOp(0.0f, 1.0f))
             .build()
         val tensorImage = imageProcessor.process(TensorImage.fromBitmap(bitmap))
 

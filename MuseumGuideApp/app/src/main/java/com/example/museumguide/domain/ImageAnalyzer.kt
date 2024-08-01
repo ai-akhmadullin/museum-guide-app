@@ -15,7 +15,7 @@ class ImageAnalyzer(
             val rotationDegrees = image.imageInfo.rotationDegrees
             val bitmap = image
                 .toBitmap()
-//                .centerCrop(224, 224)
+                .normalizePixelValues()
 
             val results = classifier.classify(bitmap, rotationDegrees)
             onResults(results)
