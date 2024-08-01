@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import java.io.IOException
 
-
 @Composable
 fun Gallery(navController: NavHostController, exhibits: List<Exhibit>) {
     val context = LocalContext.current
@@ -29,7 +28,7 @@ fun Gallery(navController: NavHostController, exhibits: List<Exhibit>) {
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
         items(images) { image ->
-            val bitmap = getBitmapFromAssets(context, "gallery/$image")
+            val bitmap = getBitmapFromAssets(context, "gallery/$image", 400, 500)
             val exhibitId = image.substringBefore(".").toIntOrNull()
 
             if (bitmap != null && exhibitId != null) {
@@ -47,7 +46,6 @@ fun Gallery(navController: NavHostController, exhibits: List<Exhibit>) {
     }
 }
 
-
 fun loadImagesFromAssets(context: Context, path: String): List<String> {
     return try {
         context.assets.list(path)?.toList() ?: emptyList()
@@ -57,10 +55,15 @@ fun loadImagesFromAssets(context: Context, path: String): List<String> {
     }
 }
 
-fun getBitmapFromAssets(context: Context, filePath: String): Bitmap? {
+fun getBitmapFromAssets(context: Context, filePath: String, width: Int? = null, height: Int? = null): Bitmap? {
     return try {
         val inputStream = context.assets.open(filePath)
-        BitmapFactory.decodeStream(inputStream)
+        val originalBitmap = BitmapFactory.decodeStream(inputStream)
+        if (width != null && height != null) {
+            Bitmap.createScaledBitmap(originalBitmap, width, height, true)
+        } else {
+            originalBitmap
+        }
     } catch (e: IOException) {
         e.printStackTrace()
         null
