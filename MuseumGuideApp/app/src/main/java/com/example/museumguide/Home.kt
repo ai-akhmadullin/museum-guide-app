@@ -75,7 +75,7 @@ fun Home() {
                 .horizontalScroll(rememberScrollState())
         ) {
             images.forEach { image ->
-                val bitmap = getBitmapFromAssets(context, "gallery/$image")
+                val bitmap = getBitmapFromAssets(context, "gallery/$image", 400, 400)
                 if (bitmap != null) {
                     Image(
                         bitmap = bitmap.asImageBitmap(),
