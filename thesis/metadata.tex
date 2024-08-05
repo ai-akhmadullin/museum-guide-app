@@ -15,53 +15,55 @@
 
 % Thesis title in English (exactly as in the official assignment)
 % (Note: \xxx is a "ToDo label" which makes the unfilled visible. Remove it.)
-\def\ThesisTitle{\xxx{Thesis title}}
+\def\ThesisTitle{{Mobile app for real-time exhibit recognition in a museum}}
 
 % Author of the thesis (you)
-\def\ThesisAuthor{\xxx{Name Surname}}
+\def\ThesisAuthor{{Airat Akhmadullin}}
 
 % Year when the thesis is submitted
-\def\YearSubmitted{\xxx{YEAR}}
+\def\YearSubmitted{{2024}}
 
 % Name of the department or institute, where the work was officially assigned
 % (according to the Organizational Structure of MFF UK in English,
 % see https://www.mff.cuni.cz/en/faculty/organizational-structure,
 % or a full name of a department outside MFF)
-\def\Department{\xxx{Name of the department}}
+\def\Department{{Department of Software and Computer Science Education}}
 
 % Is it a department (katedra), or an institute (ústav)?
-\def\DeptType{\xxx{Department}}
+\def\DeptType{{Department}}
 
 % Thesis supervisor: name, surname and titles
-\def\Supervisor{\xxx{Supername Supersurname}}
+\def\Supervisor{{doc. RNDr. Elena Šikudová, Ph.D.}}
 
 % Supervisor's department (again according to Organizational structure of MFF)
-\def\SupervisorsDepartment{\xxx{department}}
+\def\SupervisorsDepartment{{Department of Software and Computer Science Education}}
 
 % Study programme (does not apply to rigorosum theses)
-\def\StudyProgramme{\xxx{study programme}}
+\def\StudyProgramme{{Computer Science}}
 
 % An optional dedication: you can thank whomever you wish (your supervisor,
 % consultant, who provided you with tea and pizza, etc.)
 \def\Dedication{%
-\xxx{Dedication.}
+{I would like to thank my supervisor, Elena Šikudová, for her guidance and support, 
+and my family for their constant encouragement throughout this journey.}
 }
 
 % Abstract (recommended length around 80-200 words; this is not a copy of your thesis assignment!)
 \def\Abstract{%
-\xxx{Use the most precise, shortest sentences that state what problem the
-thesis addresses, how it is approached, pinpoint the exact result achieved, and
-describe the applications and significance of the results. Highlight anything
-novel that was discovered or improved by the thesis. Maximum length is 200
-words, but try to fit into 120. Abstracts are often used for deciding if
-a reviewer will be suitable for the thesis; a well-written abstract thus
-increases the probability of getting a reviewer who will like the thesis.}
+{This thesis presents the development of a mobile application aimed at enhancing the museum 
+experience by providing real-time image classification of exhibits. The application utilizes 
+a fine-tuned MobileNet neural network, trained on frames extracted from video recordings 
+of each exhibit. The model is converted to TensorFlow Lite format for efficient on-device 
+inference. Users can point their mobile device's camera at an exhibit, and the application 
+automatically captures images at regular intervals for classification. Upon recognizing 
+an exhibit, the app retrieves and displays additional information, offering an interactive 
+and informative guide for museum visitors.}
 }
 
 % 3 to 5 keywords (recommended) separated by \sep
 % Keywords are useful for indexing and searching for the theses by topic.
 \def\ThesisKeywords{%
-\xxx{keyword\sep key phrase}
+{Computer vision\sep Deep learning\sep Mobile app\sep Image classification\sep Android}
 }
 
 % If any of your metadata strings contains TeX macros, you need to provide
@@ -80,16 +82,23 @@ increases the probability of getting a reviewer who will like the thesis.}
 % If you are studing in a Czech programme, you also need to provide metadata in Czech:
 % (in English programmes, this is not used anywhere)
 
-\def\ThesisTitleCS{\xxx{Název práce česky}}
-\def\DepartmentCS{\xxx{Název katedry česky}}
-\def\DeptTypeCS{\xxx{Katedra}}
-\def\SupervisorsDepartmentCS{\xxx{katedra vedoucího}}
-\def\StudyProgrammeCS{\xxx{studijní program}}
+\def\ThesisTitleCS{{Mobilní aplikace pro rozpoznávání exponátů v reálném čase v muzeu}}
+\def\DepartmentCS{{Katedra softwaru a výuky informatiky}}
+\def\DeptTypeCS{{Katedra}}
+\def\SupervisorsDepartmentCS{{Katedra softwaru a výuky informatiky}}
+\def\StudyProgrammeCS{{Informatika}}
 
 \def\ThesisKeywordsCS{%
-\xxx{klíčová slova\sep klíčové fráze}
+{Počítačové vidění\sep Hluboké učení\sep Mobilní aplikace\sep Klasifikace obrazu\sep Android}
 }
 
 \def\AbstractCS{%
-\xxx{Abstrakt práce přeložte také do češtiny.}
+{Tato práce představuje vývoj mobilní aplikace zaměřené na vylepšení zážitku z návštěvy muzea 
+poskytováním klasifikace obrazů exponátů v reálném čase. Aplikace využívá jemně vyladěnou 
+neuronovou síť MobileNet, vycvičenou na snímcích extrahovaných z videozáznamů jednotlivých 
+exponátů. Model je převeden do formátu TensorFlow Lite pro efektivní inference přímo na zařízení. 
+Uživatelé mohou namířit kameru svého mobilního zařízení na exponát a aplikace automaticky 
+v pravidelných intervalech zachytí snímky pro klasifikaci. Po rozpoznání exponátu aplikace načte 
+a zobrazí další informace, čímž nabízí interaktivního a informativního průvodce pro návštěvníky 
+muzea.}
 }
