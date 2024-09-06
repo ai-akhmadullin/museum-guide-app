@@ -11,13 +11,28 @@ parser.add_argument("--frames_dir", type=str, default="res/frames", help="Direct
 parser.add_argument("--output_tf_path", type=str, default="python/mobilenet_v2_custom.h5", help="Path to save the TF model.")
 parser.add_argument("--output_tflite_path", type=str, default="python/mobilenet_v2_custom.tflite", help="Path to save the TFLite model.")
 parser.add_argument("--epochs", type=int, default=20, help="Number of epochs for initial training.")
-parser.add_argument("--finetune_epochs", type=int, default=10, help="Number of epochs for fine-tuning.")
+parser.add_argument("--finetune_epochs", type=int, default=20, help="Number of epochs for fine-tuning.")
 parser.add_argument("--validation_split", type=float, default=0.0, help="Fraction of data to use for validation (0 to disable validation).")
 
 parser.add_argument("--generate_metadata", type=bool, default=True, help="Flag to generate metadata for the TFLite model.")
 parser.add_argument("--metadata_script", type=str, default="python/metadata_writer_for_image_classifier.py", help="Path to the metadata script.")
 parser.add_argument("--label_file", type=str, default="MuseumGuideApp/app/src/main/assets/labels.txt", help="Path to the label file.")
 parser.add_argument("--export_directory", type=str, default="MuseumGuideApp/app/src/main/assets", help="Directory to save the model with metadata.")
+
+
+def center_crop(img, target_size=(224, 224)):
+    h, w = img.shape[:2]
+    target_height, target_width = target_size
+    
+    crop_y = (h - target_height) // 2
+    crop_x = (w - target_width) // 2
+    
+    if crop_x < 0 or crop_y < 0 or target_width > w or target_height > h:
+        raise ValueError("Invalid dimensions for center cropping")
+    
+    img = img[crop_y:crop_y + target_height, crop_x:crop_x + target_width]
+    
+    return img
 
 
 def main(args):
@@ -28,13 +43,7 @@ def main(args):
 
     datagen = ImageDataGenerator(
         rescale=1./255,
-        rotation_range=20,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True,
-        fill_mode="nearest",
+        preprocessing_function=lambda img: center_crop(img, target_size=(224, 224)),
         validation_split=args.validation_split if args.validation_split > 0 else 0
     )
 
@@ -42,7 +51,7 @@ def main(args):
         args.frames_dir,
         subset="training" if args.validation_split > 0 else None,
         target_size=(224, 224),
-        batch_size=32,
+        batch_size=16,
         class_mode="categorical",
         classes=subdirectories
     )
@@ -53,7 +62,7 @@ def main(args):
             args.frames_dir,
             subset="validation",
             target_size=(224, 224),
-            batch_size=32,
+            batch_size=16,
             class_mode="categorical",
             classes=subdirectories
         )
