@@ -1,6 +1,6 @@
 {
   "name": "Custom MobileNetV2 image classifier",
-  "description": "Identify the most prominent object in the image from a set of 101 categories.",
+  "description": "Identify the most prominent object in the image from a set of 182 categories.",
   "version": "v1",
   "subgraph_metadata": [
     {
@@ -40,7 +40,7 @@
       "output_tensor_metadata": [
         {
           "name": "probability",
-          "description": "Probabilities of the 101 labels respectively.",
+          "description": "Probabilities of the 182 labels respectively.",
           "content": {
             "content_properties_type": "FeatureProperties"
           },
