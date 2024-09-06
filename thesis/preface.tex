@@ -1,3 +1,14 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
+In recent years, mobile technologies have advanced rapidly, which had a significant impact on various aspects of our lives, especially in education and culture. Museums, for example, are now introducing mobile technologies to increase visitor engagement and learning experiences. Traditional museum tours are often based on static information stands and guided tours, which may not match the pace and preferences of individual visitors. To solve this problem, we propose a mobile application that uses real-time image classification to create an interactive and personalized museum guide.
+
+The core of this application is a fine-tuned MobileNet neural network converted to TensorFlow Lite for efficient image classification on mobile devices. The model has been trained on a dataset with frames extracted from videos of museum exhibits. 
+
+Users of the application need to point the camera of their mobile device at the exhibit. The app will automatically take pictures at regular intervals and classify them into one of several predefined categories. After successful classification, the application extracts detailed information about the exhibit from a local database and displays it to the user. This process turns a museum visit into an interactive process where information is easily accessible.
+
+The development of this application included several key steps: video recording and frame extraction, model training and fine-tuning, Android application development and model integration into this application. Each stage presented unique tasks and required special technical solutions, which are discussed in detail in this paper.
+
+The main goal of this project is to demonstrate how mobile image classification can improve the experience of museum visitors. By automating the process of information recognition and retrieval, the application reduces the need for physical guides and static information boards, allowing visitors to explore exhibits at their own pace and according to their interests.
+
+In conclusion, this work aims to provide a comprehensive report on the development and implementation of a mobile application for real-time image classification of museum exhibits. It highlights the technical and practical aspects, as well as the potential benefits for museums and their visitors. Through this work, we hope to contribute to the ongoing efforts to integrate technology into the cultural and educational context, making learning more accessible and fun.
