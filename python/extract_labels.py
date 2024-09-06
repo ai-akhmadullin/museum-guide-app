@@ -3,7 +3,7 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--csv_file", type=str, default="res/upm_dataset/upm exhibits dataset.csv", help="Path to the input CSV file with exhibit information.")
+parser.add_argument("--csv_file", type=str, default="MuseumGuideApp/app/src/main/assets/upm_exhibits_dataset.csv", help="Path to the input CSV file with exhibit information.")
 parser.add_argument("--output_file", type=str, default="MuseumGuideApp/app/src/main/assets/labels.txt", help="Path to the output file with extracted titles.")
 
 

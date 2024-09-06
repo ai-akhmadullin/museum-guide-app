@@ -82,7 +82,7 @@ _MODEL_INFO = {
         image_max=255,
         mean=[127.5],
         std=[127.5],
-        num_classes=101,
+        num_classes=182,
         author="Airat Akhmadullin")
 }
 
@@ -190,7 +190,7 @@ def main(_):
   export_model_path = os.path.join(FLAGS.export_directory, model_basename)
 
   # Copies model_file to export_path.
-  tf.io.gfile.copy(model_file, export_model_path, overwrite=False)
+  tf.io.gfile.copy(model_file, export_model_path, overwrite=True)
 
   # Generate the metadata objects and put them in the model file
   populator = MetadataPopulatorForImageClassifier(
