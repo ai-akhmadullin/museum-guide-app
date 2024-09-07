@@ -20,31 +20,15 @@ parser.add_argument("--label_file", type=str, default="MuseumGuideApp/app/src/ma
 parser.add_argument("--export_directory", type=str, default="MuseumGuideApp/app/src/main/assets", help="Directory to save the model with metadata.")
 
 
-def center_crop(img, target_size=(224, 224)):
-    h, w = img.shape[:2]
-    target_height, target_width = target_size
-    
-    crop_y = (h - target_height) // 2
-    crop_x = (w - target_width) // 2
-    
-    if crop_x < 0 or crop_y < 0 or target_width > w or target_height > h:
-        raise ValueError("Invalid dimensions for center cropping")
-    
-    img = img[crop_y:crop_y + target_height, crop_x:crop_x + target_width]
-    
-    return img
-
-
 def main(args):
     np.random.seed(42)
     tf.random.set_seed(42)
 
-    classes = [d for d in os.listdir(args.frames_dir) if not d.startswith('.')]
+    classes = len([d for d in os.listdir(args.frames_dir) if not d.startswith('.')])
     subdirectories = [str(i) for i in range(1, classes + 1)]
 
     datagen = ImageDataGenerator(
         rescale=1./255,
-        preprocessing_function=lambda img: center_crop(img, target_size=(224, 224)),
         validation_split=args.validation_split if args.validation_split > 0 else 0
     )
 
@@ -78,7 +62,7 @@ def main(args):
         base_model,
         tf.keras.layers.GlobalAveragePooling2D(),
         tf.keras.layers.Dense(1024, activation="relu"),
-        tf.keras.layers.Dropout(0.5),
+        tf.keras.layers.Dropout(0.1),
         tf.keras.layers.Dense(train_generator.num_classes, activation="softmax")
     ])
 
