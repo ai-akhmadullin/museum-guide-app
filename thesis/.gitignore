@@ -13,3 +13,7 @@ aux/
 *.toc
 *.xmpdata
 *.xmpi
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
