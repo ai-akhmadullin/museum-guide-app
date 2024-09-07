@@ -98,7 +98,7 @@ fun PhotoScanner(navigationController: NavHostController) {
 }
 
 @Composable
-fun CameraScreen(navigationController: NavHostController) {
+fun CameraScreen(navigationController: NavHostController, debugMode: Boolean = false) {
     val context = LocalContext.current
 
     var classifications by remember {
@@ -136,42 +136,78 @@ fun CameraScreen(navigationController: NavHostController) {
                 .padding(8.dp)
         ) {
             if (classifications.isNotEmpty()) {
-                val topClassification = classifications[0]
-                val otherClassifications = classifications.drop(1).take(4).joinToString(",") { it.id.toString() }
+                if (debugMode) {
+                    // Debug Mode: Show all classifications with their scores
+                    classifications.forEach { classification ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                                .align(Alignment.CenterHorizontally),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer
+                            )
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            ) {
+                                Text(
+                                    text = classification.name,
+                                    fontSize = 20.sp,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                                Text(
+                                    text = "Score: %.2f".format(classification.score),
+                                    fontSize = 16.sp,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    // Regular Mode: Show only the top classification
+                    val topClassification = classifications[0]
+                    val otherClassifications = classifications.drop(1).take(4).joinToString(",") { it.id.toString() }
 
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .align(Alignment.CenterHorizontally),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
-                ) {
-                    Text(
-                        text = topClassification.name,
+                    Card(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .fillMaxWidth()
+                            .padding(8.dp)
                             .align(Alignment.CenterHorizontally),
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                        )
+                    ) {
+                        Text(
+                            text = topClassification.name,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .align(Alignment.CenterHorizontally),
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
 
-                Spacer(modifier = Modifier.weight(1f))
+                    Spacer(modifier = Modifier.weight(1f))
 
-                Button(
-                    onClick = {
-                        val exhibitId = topClassification.id
-                        navigationController.navigate("exhibit_detail/$exhibitId?otherClassifications=$otherClassifications")
-                    },
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(bottom = 8.dp)
-                ) {
-                    Text("See Details")
+                    Button(
+                        onClick = {
+                            val exhibitId = topClassification.id
+                            navigationController.navigate("exhibit_detail/$exhibitId?otherClassifications=$otherClassifications")
+                        },
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(bottom = 8.dp)
+                    ) {
+                        Text("See Details")
+                    }
                 }
             }
         }
