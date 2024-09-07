@@ -39,7 +39,8 @@ def main(args):
     np.random.seed(42)
     tf.random.set_seed(42)
 
-    subdirectories = [str(i) for i in range(1, len(os.listdir(args.frames_dir))+1)]
+    classes = [d for d in os.listdir(args.frames_dir) if not d.startswith('.')]
+    subdirectories = [str(i) for i in range(1, classes + 1)]
 
     datagen = ImageDataGenerator(
         rescale=1./255,
