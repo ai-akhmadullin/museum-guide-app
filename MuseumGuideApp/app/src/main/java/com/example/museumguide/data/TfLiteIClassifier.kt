@@ -47,7 +47,7 @@ class TfLiteIClassifier(
         }
 
         val imageProcessor = ImageProcessor.Builder()
-            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
+            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR))
             .build()
         val tensorImage = imageProcessor.process(TensorImage.fromBitmap(bitmap))
 
