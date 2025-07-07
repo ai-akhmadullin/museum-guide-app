@@ -1,0 +1,52 @@
+\chapter{Android Application Development}
+
+\section{Choice of Platform}
+
+We chose Android as the target platform because it remains the most popular mobile operating system globally, holding approximately 70\% of the market share as of 2025. While cross-platform solutions like React Native, Flutter, or Xamarin offer the advantage of developing for multiple platforms simultaneously, they often come with trade-offs, such as reduced access to native device features, performance overhead, or difficulties integrating specific hardware functionalities. Given our application's requirements for real-time image processing and machine learning integration, native Android development provided the necessary performance and access to device-specific capabilities.
+
+\section{Application Architecture}
+
+The Android application was developed using Kotlin and structured as follows:
+
+\begin{itemize}
+\item \textbf{UI}: Contains theming elements such as color schemes, typography, and theme configurations using Jetpack Compose (a modern toolkit for building native UI in Android~\cite{jetpack_compose}). This simplifies the management of visual consistency throughout the app.
+\item \textbf{Domain}: Includes core logic and data structures, such as the Classification data class, the IClassifier interface, and image processing helpers. Additionally, it contains the ImageAnalyzer, which manages the analysis of camera frames for classification.
+\item \textbf{Data}: Handles the integration and execution of the TensorFlow Lite model through the TfLiteClassifier class. This includes loading the model, preparing images for inference, and providing classification results to the domain layer.
+\item \textbf{Root}: Comprises main components directly tied to the application's functionality, such as screens (Home, Gallery, ExhibitDetailScreen, PhotoScanner) and navigation between these screens.
+\end{itemize}
+
+This organization separates responsibilities, keeping the project maintainable.
+
+\section{User Interface}
+
+There are five main screens in the application:
+
+\begin{itemize}
+\item \textbf{Home Screen}: A page dedicated to the museum, with contacts and social media links.
+\item \textbf{Gallery Screen}: A page displaying a grid of museum exhibits, allowing users to browse through available items and open detailed information about each exhibit.
+\item \textbf{Exhibit Detail Screen}: A page providing information about an exhibit, such as title, author, and dates.
+\item \textbf{Photo Scanner Screen}: Presents real-time recognition results directly overlaid on the live camera view.
+\item \textbf{Classification Result Screen}: Displays the classification results, showing the top recognized exhibit and up to four alternatives for user selection ordered by confidence level. This is particularly useful for misclassified or uncertain results, allowing users to find the correct exhibit.
+\end{itemize}
+
+TODO: Add screenshots of the application
+
+\section{Real-Time Image Processing and TensorFlow Lite Integration}
+
+To make our application recognize museum exhibits in real-time, we combined the capabilities of TensorFlow Lite (TFLite) with Android's CameraX library~\cite{camerax}. TensorFlow Lite allows machine learning models to run efficiently directly on mobile devices, while CameraX makes it straightforward to access and manage the device's camera hardware across various Android phones.
+
+When the application starts, it loads the MobileNetV2 TFLite model we trained. This initial loading is done once.
+
+Next, CameraX continuously captures frames from the camera. To avoid overwhelming the device, our application analyzes only every 30th frame captured by the camera. This balance provides timely recognition without putting too much strain on the phone's resources.
+
+Each captured frame is initially in YUV format, a standard camera format optimized for speed and efficiency. However, our model requires standard Bitmap images, representing image data in the RGB color space. Therefore, each selected YUV frame is converted into a Bitmap.
+
+After converting to a Bitmap, we preprocess the image further by resizing it to $224 \times 224$ pixels to match the input dimensions of the MobileNetV2 model. Additionally, each pixel's values are normalized, adjusting them from the original 0--255 range into a 0--1 range. This normalization is crucial for the model to interpret the pixel values correctly, as it was trained on images in this normalized format.
+
+Once preprocessed, the Bitmap is sent to the TensorFlow Lite model, which performs the classification task. The model analyzes the image and returns a set of predictions, ranking them based on confidence levels. These results are then sent to the UI, where users can see the recognized exhibit and alternative suggestions to help with possible misclassifications.
+
+By integrating CameraX for capturing frames and TensorFlow Lite for image recognition, we created an efficient, responsive application that provides museum visitors with immediate and reliable exhibit identification.
+
+\section{Conclusion}
+
+In this chapter, we have described in detail the development of our Android application, focusing on the choice of platform, architecture, user interface design, and integration of real-time image processing with TensorFlow Lite. The application is designed in such a way as to ensure user-friendliness while efficiently using the device's resources to recognize exhibits in real time. The combination of CameraX and TensorFlow Lite allows you to effectively classify museum exhibits, increasing visitor engagement and interaction with the museum's offerings.

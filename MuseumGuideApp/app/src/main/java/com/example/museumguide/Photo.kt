@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
-import com.example.museumguide.data.TfLiteIClassifier
+import com.example.museumguide.data.TfLiteClassifier
 import com.example.museumguide.domain.Classification
 import com.example.museumguide.domain.ImageAnalyzer
 
@@ -112,7 +112,7 @@ fun CameraScreen(navigationController: NavHostController, debugMode: Boolean = f
 
     val analyzer = remember {
         ImageAnalyzer(
-            classifier = TfLiteIClassifier(
+            classifier = TfLiteClassifier(
                 context = context
             ),
             onResults = {
