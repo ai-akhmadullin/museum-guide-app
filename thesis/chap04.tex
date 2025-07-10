@@ -29,7 +29,75 @@ There are five main screens in the application:
 \item \textbf{Classification Result Screen}: Displays the classification results, showing the top recognized exhibit and up to four alternatives for user selection ordered by confidence level. This is particularly useful for misclassified or uncertain results, allowing users to find the correct exhibit.
 \end{itemize}
 
-TODO: Add screenshots of the application
+In Figures~\ref{fig:app_screens_1} and~\ref{fig:app_screens_2}, you can see the application's user interface, showcasing the main screens and some additional details, such as permission requests and debug mode. Additionally, a short video demonstrating the usage of the application can be viewed at the following link: 
+
+\begin{center}
+\url{https://www.youtube.com/shorts/RytfYy3VI8E}
+\end{center}
+
+\begin{figure}[h]
+    \centering
+
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/home-screen-1.jpg}
+        \caption{Home Screen (1/2).}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/home-screen-2.jpg}
+        \caption{Home Screen (2/2).}
+    \end{subfigure}
+
+    \vspace{1em}
+
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/gallery-screen.jpg}
+        \caption{Gallery Screen.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/exhibit-screen.jpg}
+        \caption{Exhibit Detail Screen.}
+    \end{subfigure}
+
+    \caption{Screens of the application. The Home Screen provides museum information, the Gallery Screen displays exhibits, and the Exhibit Detail Screen shows detailed information about a selected exhibit.}\label{fig:app_screens_1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/permissions-screen.jpg}
+        \caption{Permissions.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/debug-mode.jpg}
+        \caption{Debug Mode.}
+    \end{subfigure}
+
+    \vspace{1em}
+
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/classification-preview-screen.jpg}
+        \caption{Photo Scanner Screen.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/classification-screen.jpg}
+        \caption{Classification Result Screen.}
+    \end{subfigure}
+
+    \caption{Screens of the application. The Permissions screen requests necessary permissions, the Debug Mode allows for real-time adjustments, the Photo Scanner Screen shows the live camera feed with recognition results, and the Classification Result Screen displays the top recognized exhibit and alternatives.}\label{fig:app_screens_2}
+\end{figure}
 
 \section{Real-Time Image Processing and TensorFlow Lite Integration}
 
@@ -46,6 +114,16 @@ After converting to a Bitmap, we preprocess the image further by resizing it to 
 Once preprocessed, the Bitmap is sent to the TensorFlow Lite model, which performs the classification task. The model analyzes the image and returns a set of predictions, ranking them based on confidence levels. These results are then sent to the UI, where users can see the recognized exhibit and alternative suggestions to help with possible misclassifications.
 
 By integrating CameraX for capturing frames and TensorFlow Lite for image recognition, we created an efficient, responsive application that provides museum visitors with immediate and reliable exhibit identification.
+
+\section{Threshold Adjustment}
+
+An important parameter in the classification process is the classification threshold, which determines the minimum confidence level required for a prediction to be considered valid. If the model's confidence in the top prediction is below this threshold, the application will not display any results, indicating uncertainty in the classification. 
+
+To provide the user with some result and its alternatives in most cases, but not overload the user with likely irrelevant results, we set the threshold to 0.3.
+
+\section{Debug Mode}
+
+To get more insights into the model's behaviour in a real scenario (while testing the application in the museum), we implemented a debug mode. This mode can be activated by clicking a button on the camera preview screen. When enabled, it allows changing the model's threshold on the fly and displays all classification results with a confidence level above the threshold (alongside their confidence levels). This feature is particularly useful for deciding on the optimal threshold for the model, as it allows one to see the range of usual confidence levels for correct classifications. The debug mode also displays the time taken for each classification, which will help us evaluate the model's responsiveness. This figure shows an example of the debug mode in action:
 
 \section{Conclusion}
 
