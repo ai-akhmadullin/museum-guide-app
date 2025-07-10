@@ -68,28 +68,27 @@ CNNs have been successfully used to solve various image classification tasks, in
 
 \section{MobileNet}\label{section:mobilenet}
 
-MobileNet is a class of efficient convolutional neural networks specifically designed for mobile and embedded vision applications. Introduced by Howard et al. \cite{howard_mobilenet}, MobileNet addresses the need for high-performance neural networks that can work efficiently on devices with limited resources (e.g., smartphones).
+MobileNet is a class of efficient convolutional neural networks specifically designed for mobile and embedded vision applications. Introduced by Howard et al.~\cite{howard_mobilenet}, MobileNet addresses the need for high-performance neural networks that can work efficiently on devices with limited resources (e.g., smartphones).
 
 \subsection{Architecture of MobileNet}
 
-The core innovation of MobileNet is the use of depthwise separable convolutions, which break down the standard convolution operation into two simpler steps: depthwise convolution (applying a single filter per input channel) and pointwise convolution (combining the output channels). This approach significantly reduces the number of calculations (23x fewer multiplications for an 8x8x3 image) and model size, making MobileNet fast and lightweight.
+The core innovation of MobileNet is the use of depthwise separable convolutions, which break down the standard convolution operation into two simpler steps: depthwise convolution (applying a single filter per input channel) and pointwise convolution (combining the output channels). This approach significantly reduces the number of calculations (23x fewer multiplications for an 8 $\times$ 8 $\times$ 3 image) and model size, making MobileNet fast and lightweight.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{img/mobilenet.png}
-    \caption{Left: Standard Convolutional layer, Right: Depthwise Separable Convolutional layers in MobileNet. Source: image from the original paper.}
-    \label{fig:mobilenet}
+    \caption{Left: Standard Convolutional layer, Right: Depthwise Separable Convolutional layers in MobileNet. Source: image from the original paper.}\label{fig:mobilenet}
 \end{figure}
 
 \subsection{MobileNet Versions}
 
 There are three versions of the MobileNet architecture, each improving upon the last in terms of efficiency and accuracy:
 
-\textbf{MobileNetV1} was the first iteration, known for being ten times faster and smaller than the VGG16 architecture, making it a popular choice for mobile applications due to its significant reduction in computational resources \cite{pandrii_mobilenet}.
+\textbf{MobileNetV1} was the first iteration, known for being ten times faster and smaller than the VGG16 architecture, making it a popular choice for mobile applications due to its significant reduction in computational resources~\cite{pandrii_mobilenet}.
 
-\textbf{MobileNetV2} introduced inverted residual blocks with linear bottlenecks, which enhanced the model's ability to learn more efficient representations. This version is approximately 30\% smaller and 0.3 times faster than MobileNetV1 while being 1\% more accurate \cite{pandrii_mobilenet}.
+\textbf{MobileNetV2} introduced inverted residual blocks with linear bottlenecks, which enhanced the model's ability to learn more efficient representations. This version is approximately 30\% smaller and 0.3 times faster than MobileNetV1 while being 1\% more accurate~\cite{pandrii_mobilenet}.
 
-\textbf{MobileNetV3} builds upon the improvements of V2 by incorporating advances such as Neural Architecture Search (NAS) and Squeeze-and-Excitation (SE) modules. MobileNetV3 is twice as fast and 30\% smaller than V2 but with a slight trade-off in accuracy, being 3\% less accurate than MobileNetV2 \cite{pandrii_mobilenet}.
+\textbf{MobileNetV3} builds upon the improvements of V2 by incorporating advances such as Neural Architecture Search (NAS) and Squeeze-and-Excitation (SE) modules. MobileNetV3 is twice as fast and 30\% smaller than V2 but with a slight trade-off in accuracy, being 3\% less accurate than MobileNetV2~\cite{pandrii_mobilenet}.
 
 \textbf{Note on Model Choice:} Despite the improvements in MobileNetV3, MobileNetV2 was chosen for this thesis due to its optimal balance between accuracy and efficiency. While V3 offers better speed and smaller size, the slight reduction in accuracy was not suitable for the high accuracy requirements of this project.
 
