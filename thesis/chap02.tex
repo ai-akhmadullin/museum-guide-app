@@ -1,6 +1,10 @@
 \chapter{Theoretical Background}
 
+This chapter gathers the core concepts underlying the methods used in this thesis. It first revisits Convolutional Neural Networks (CNNs), then reviews the MobileNet family of efficient CNNs, and finally introduces the transfer-learning paradigm that allows these models to be adapted to small, domain-specific data sets.
+
 \section{Convolutional Neural Networks (CNNs)}
+
+The following subsections walk through the building blocks of modern CNNs, highlighting how their layered structure extracts abstract visual features and why these properties are especially valuable for classifying museum exhibits.
 
 \subsection{Introduction to CNNs}
 
@@ -15,7 +19,7 @@ A typical CNN architecture consists of several key components: an input layer, c
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{img/cnn-architecture.png}
-    \caption{Illustration of a CNN architecture. Source: \href{https://www.researchgate.net/publication/336805909_A_High-Accuracy_Model_Average_Ensemble_of_Convolutional_Neural_Networks_for_Classification_of_Cloud_Image_Patches_on_Small_Datasets}{ResearchGate article.}}\label{fig:cnn-architecture}
+    \caption{Illustration of a CNN architecture (adapted from~\cite{phung_cloudcnn}).}\label{fig:cnn-architecture}
 \end{figure}
 
 \subsubsection{Convolutional Layers}
@@ -46,7 +50,7 @@ ReLU introduces non-linearity into the model, which is needed in order to learn 
 
 Pooling layers, often placed between consecutive convolutional layers, are used to reduce the dimensions of the feature maps. This operation reduces the network's computational complexity and makes the learned features more invariant to small translations of the input image.
 
-The most common pooling operation is max pooling, which selects the maximum value from each region of the feature map. The formula for max pooling over a 2x2 region is:
+The most common pooling operation is max pooling, which selects the maximum value from each region of the feature map. The formula for max pooling over a 2 $\times$ 2 region is:
 
 \[
 \text{MaxPool}(i,j) = \max \{ I_{2i,2j}, I_{2i,2j+1}, I_{2i+1,2j}, I_{2i+1,2j+1} \}
@@ -66,6 +70,8 @@ The CNN's output layer typically uses a softmax activation function for multi-cl
 
 CNNs have been successfully used to solve various image classification tasks, including object detection, face recognition, and medical image analysis. In the context of museum applications, CNNs are used to classify and recognize various types of exhibits, ranging from paintings and sculptures to historical artifacts. By fine-tuning pre-trained CNN models on museum-specific datasets, it is possible to achieve high accuracy in identifying exhibits, thereby enhancing the visitor experience.
 
+For further in-depth treatment of CNN foundations the reader is referred to Krizhevsky et al.~\cite{krizhevsky_imagenet}.
+
 \section{MobileNet}\label{section:mobilenet}
 
 MobileNet is a class of efficient convolutional neural networks specifically designed for mobile and embedded vision applications. Introduced by Howard et al.~\cite{howard_mobilenet}, MobileNet addresses the need for high-performance neural networks that can work efficiently on devices with limited resources (e.g., smartphones).
@@ -77,7 +83,7 @@ The core innovation of MobileNet is the use of depthwise separable convolutions,
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{img/mobilenet.png}
-    \caption{Left: Standard Convolutional layer, Right: Depthwise Separable Convolutional layers in MobileNet. Source: image from the original paper.}\label{fig:mobilenet}
+    \caption{Left: Standard Convolutional layer, Right: Depthwise Separable Convolutional layers in MobileNet (adapted from~\cite{howard_mobilenet})}\label{fig:mobilenet}
 \end{figure}
 
 \subsection{MobileNet Versions}
@@ -111,6 +117,8 @@ In traditional machine learning, models are usually trained from scratch using a
 \subsection{Transfer Learning in CNNs}
 
 Transfer learning is widely used in the context of CNNs, especially for image classification tasks. During transfer learning, the early layers of a pre-trained CNN are often frozen (i.e., their weights are kept constant), and only the deeper layers are fine-tuned. This approach keeps the general feature extraction capabilities of the early layers, which are often relevant across different tasks, while adapting the model to the specific characteristics of the target data.
+
+For a detailed discussion of feature transferability, see Yosinski et al.~\cite{yosinski_transfer_learning}.
 
 \subsection{Transfer Learning in Museum Exhibit Classification}
 
