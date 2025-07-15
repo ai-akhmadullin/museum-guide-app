@@ -9,13 +9,21 @@ We chose Android as the target platform because it remains the most popular mobi
 The Android application was developed using Kotlin and structured as follows:
 
 \begin{itemize}
-\item \textbf{UI}: Contains theming elements such as color schemes, typography, and theme configurations using Jetpack Compose (a modern toolkit for building native UI in Android~\cite{jetpack_compose}). This simplifies the management of visual consistency throughout the app.
-\item \textbf{Domain}: Includes core logic and data structures, such as the Classification data class, the IClassifier interface, and image processing helpers. Additionally, it contains the ImageAnalyzer, which manages the analysis of camera frames for classification.
-\item \textbf{Data}: Handles the integration and execution of the TensorFlow Lite model through the TfLiteClassifier class. This includes loading the model, preparing images for inference, and providing classification results to the domain layer.
-\item \textbf{Root}: Comprises main components directly tied to the application's functionality, such as screens (Home, Gallery, ExhibitDetailScreen, PhotoScanner) and navigation between these screens.
+\item \textbf{UI Layer}: Contains theming elements such as color schemes, typography, and theme configurations using Jetpack Compose (a modern toolkit for building native UI in Android~\cite{jetpack_compose}). This simplifies the management of visual consistency throughout the app.
+\item \textbf{Domain Layer}: Includes core logic and data structures, such as the Classification data class, the IClassifier interface, and image processing helpers. Additionally, it contains the ImageAnalyzer, which manages the analysis of camera frames for classification.
+\item \textbf{Data Layer}: Handles the integration and execution of the TensorFlow Lite model through the TfLiteClassifier class. This includes loading the model, preparing images for inference, and providing classification results to the domain layer.
+\item \textbf{Root Layer}: Comprises main components directly tied to the application's functionality, such as screens (Home, Gallery, ExhibitDetailScreen, PhotoScanner) and navigation between these screens.
 \end{itemize}
 
-This organization separates responsibilities, keeping the project maintainable.
+The architecture follows a modular approach, enabling clear separation of concerns between presentation, domain logic, and data processing. The UI layer is implemented entirely with Jetpack Compose, which allows for declarative and reactive UI construction. The domain layer acts as the application's logic core. By defining interfaces such as \texttt{IClassifier}, the code allows for easy swapping or extension of classification backends in the future. The data layer encapsulates the integration with machine learning models, abstracting away the details of TensorFlow Lite inference. Navigation and screen composition are handled in the root layer.
+
+The diagram~\ref{fig:architecture} illustrates these layers and their interactions, showing data flow and relationships.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{img/architecture-diagram.png}
+    \caption{Application architecture diagram. The UI Layer handles theming, the Domain Layer contains core logic and data structures, the Data Layer integrates TensorFlow Lite, and the Root Layer manages screens and navigation.}\label{fig:architecture}
+\end{figure}
 
 \section{User Interface}
 
@@ -124,6 +132,61 @@ To provide the user with some result and its alternatives in most cases, but not
 \section{Debug Mode}
 
 To get more insights into the model's behaviour in a real scenario (while testing the application in the museum), we implemented a debug mode. This mode can be activated by clicking a button on the camera preview screen. When enabled, it allows changing the model's threshold on the fly and displays all classification results with a confidence level above the threshold (alongside their confidence levels). This feature is particularly useful for deciding on the optimal threshold for the model, as it allows one to see the range of usual confidence levels for correct classifications. The debug mode also displays the time taken for each classification, which will help us evaluate the model's responsiveness.
+
+\section{Final Pipeline}
+
+The complete pipeline for the application's core functionality can be described step-by-step as follows:
+
+\begin{enumerate}
+\item \textbf{User Interaction and Navigation (UI and Root Layers)}:
+\begin{itemize}
+\item \textbf{Input}: User interactions (clicks, navigations).
+\item \textbf{Output}: Navigation to appropriate screens (e.g., PhotoScanner).
+\end{itemize}
+
+\item \textbf{Input Acquisition (CameraX, Domain Layer)}:
+\begin{itemize}
+    \item \textbf{Input}: Real-time camera feed (YUV format).
+    \item \textbf{Output}: Selected frames at defined intervals (every 30th frame).
+\end{itemize}
+
+\item \textbf{Image Preprocessing (Bitmap Conversion and Normalization, Domain Layer)}:
+\begin{itemize}
+    \item \textbf{Input}: YUV image frames.
+    \item \textbf{Process}: Conversion from YUV to RGB Bitmap format, resizing to $224 \times 224$ pixels, and normalization of pixel values from 0--255 to 0--1 range.
+    \item \textbf{Output}: Normalized Bitmap images ready for classification.
+\end{itemize}
+
+\item \textbf{TensorFlow Lite Model Inference (Data Layer)}:
+\begin{itemize}
+    \item \textbf{Input}: Preprocessed Bitmap images.
+    \item \textbf{Process}: Inference performed using the preloaded MobileNetV2 TFLite model, configured with adjustable threshold parameters.
+    \item \textbf{Output}: Classification results including the recognized exhibit labels, IDs, and confidence scores.
+\end{itemize}
+
+\item \textbf{Result Processing and Filtering (Domain Layer)}:
+\begin{itemize}
+    \item \textbf{Input}: Raw classification results.
+    \item \textbf{Process}: Filtering based on confidence threshold (default 0.3), sorting results by confidence, and selection of top predictions.
+    \item \textbf{Output}: Final set of results with one primary prediction and up to four alternative predictions.
+\end{itemize}
+
+\item \textbf{User Interface Presentation (UI Layer)}:
+\begin{itemize}
+    \item \textbf{Input}: Processed classification results.
+    \item \textbf{Process}: Results are displayed in the UI overlaying the camera preview, highlighting the primary identified exhibit, with quick access to alternative suggestions.
+    \item \textbf{Output}: Interactive display allowing the user to navigate to detailed exhibit information.
+\end{itemize}
+
+\item \textbf{Exhibit Information Display (Root and UI Layer)}:
+\begin{itemize}
+    \item \textbf{Input}: Exhibit ID from classification results.
+    \item \textbf{Process}: Retrieval of detailed exhibit information from CSV data.
+    \item \textbf{Output}: Detailed exhibit view including title, author, dating information, and related imagery.
+\end{itemize}
+\end{enumerate}
+
+This comprehensive overview should provide a better understanding of the holistic behavior and integration of the various elements in the application.
 
 \section{Conclusion}
 
