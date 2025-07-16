@@ -7,4 +7,4 @@ clean:
 	rm -rf tmp
 	rm -f thesis.pdf abstract.pdf abstract-cs.pdf abstract-en.pdf
 
-.PHONY: force
+.PHONY: force all clean
